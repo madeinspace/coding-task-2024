@@ -28,7 +28,10 @@ In our main code base, you would expect to find this architecture replicated wit
 
 1. //Optionally provide any notes relating to question 1 here.
 2. //Optionally provide any notes relating to question 2 here.
-    TODO: dialog component to say "creating" instead of "editing" depending on a flag perhaps.    
 3. //Provide your answer to question 3 here.
     Going through the rxjx API there is a catchError operator that we could use on the getContact and saveContact service functions, my feeling is we could use that operator to dispatch an error action that a reducer could use to update the state and UI.
 4. //Provide your link or location of your file within the repo here.
+    The UI would have need the following 
+    1.	Select one or more projects.
+	2.	Assign a specific role to the contact for each selected project.
+	3.	View, add, or edit the assigned roles for each project.

@@ -14,7 +14,8 @@ export class ContactEditDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<{contact: Contact}>,
     @Inject(MAT_DIALOG_DATA) public data: {
-      contact : Contact | null
+      contact : Contact | null,
+      isEditMode:false
     }
   ){
 

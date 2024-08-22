@@ -1,17 +1,17 @@
 <div class="dialog-container">
 
-    <h3 class="dialog-title">Editing Contact with ID: {{data.contact?.id}}</h3>
+    <h3 class="dialog-title">{{ data.isEditMode ? 'Editing Contact with ID: ' + data.contact?.id : 'Creating New Contact' }}</h3>
 
     <form [formGroup]="contactForm" class="contact-form">
-    <input formControlName="firstName" placeholder="First Name" class="form-input">
-    <input formControlName="lastName" placeholder="Last Name" class="form-input">
-    <input formControlName="phoneNumber" placeholder="Phone Number" class="form-input">
-    <input formControlName="email" placeholder="Email Address" class="form-input">
+        <input formControlName="firstName" placeholder="First Name" class="form-input">
+        <input formControlName="lastName" placeholder="Last Name" class="form-input">
+        <input formControlName="phoneNumber" placeholder="Phone Number" class="form-input">
+        <input formControlName="email" placeholder="Email Address" class="form-input">
     </form>
 
     <div class="dialog-actions">
-    <button type="button" class="btn-primary" (click)="onSaveClick()">Save</button>
-    <button type="button" class="btn-secondary" (click)="onCancelClick()">Cancel</button>
+        <button type="button" class="btn-primary" (click)="onSaveClick()">Save</button>
+        <button type="button" class="btn-secondary" (click)="onCancelClick()">Cancel</button>
     </div>
 
 </div>

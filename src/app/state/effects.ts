@@ -47,14 +47,14 @@ export class ContactEffects {
                     switchMap(contact =>
                        {
                         console.log("new contact: ", contact)
-                        return this.contactService.editContactDialog$(contact).pipe(
+                        return this.contactService.editContactDialog$(contact, false).pipe(
                             map(contact => contact ? actions.editContactConfirmed({ contact }) : actions.editContactCancelled())
                         )
                         }
                     )
                 );
             } else {
-                return this.contactService.editContactDialog$(action.contact).pipe(
+                return this.contactService.editContactDialog$(action.contact, true).pipe(
                     map(contact => contact ? actions.editContactConfirmed({ contact }) : actions.editContactCancelled())
                 );
             }
