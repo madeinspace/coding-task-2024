@@ -28,6 +28,11 @@ function upsertContactList(contactList: Contact[], updatedContact: Contact): Con
 
 export const reducer = createReducer(
     initialState,
+    on(actions.createContact, (state, { contact }) => ({
+        ...state,
+        contactList: [...state.contactList, contact]
+      })),
+      
     on(actions.contactListReturned, (state, action) => ({
         ...state,
         contactList : action.contactList

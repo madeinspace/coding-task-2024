@@ -1,5 +1,8 @@
 <div *ngIf="contactList$ | async as contactList; ">
   <div *ngIf="contactList && contactList.length > 0; else loadingTemplate">
+    <div>
+      <button type="button" class="btn-primary" (click)="addContactClicked()">Add Contact</button>
+    </div>
     <div *ngFor="let contact of contactList" class="contact-list-item">
       <h3>{{ contact.firstName }} {{ contact.lastName }}</h3>
       <div class="contact-actions">
