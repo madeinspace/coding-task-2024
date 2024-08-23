@@ -38,7 +38,7 @@ export class ContactService {
   getContactList$() : Observable<Contact[]> {
 
     return of(this.mockList).pipe(
-      delay(0)
+      delay(2000)
     )
 
   }
