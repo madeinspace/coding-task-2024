@@ -29,9 +29,33 @@ In our main code base, you would expect to find this architecture replicated wit
 1. //Optionally provide any notes relating to question 1 here.
 2. //Optionally provide any notes relating to question 2 here.
 3. //Provide your answer to question 3 here.
+
     Going through the rxjx API there is a catchError operator that we could use on the getContact and saveContact service functions, my feeling is we could use that operator to dispatch an error action that a reducer could use to update the state and UI.
+    
 4. //Provide your link or location of your file within the repo here.
+
+
     The UI would have need the following 
-    1.	Select one or more projects.
+    1.	Ability to save the contact as is or ddd one or more projects to the contact form.
 	2.	Assign a specific role to the contact for each selected project.
-	3.	View, add, or edit the assigned roles for each project.
+	3.	Ability to remove or add project with associated role
+
+    We would have to modify the data model to include a relationship between Contact, Project, and Role. For example, each contact could have an array of objects where each object contains a projectId and role.
+
+    ``` typescript
+        type ContactProject = {
+            projectId: string;
+            role: Role;
+        }
+
+        type Contact = {
+            id: string;
+            name: string;
+            projects: ContactProject[];
+        }
+    ```
+
+    We would then have to update or create the UI components, update the state management, add actions reducers and effects to handle adding/removing projects, roles.
+
+    This is how it could look like:
+    https://www.figma.com/design/4w78afn5pB4moyBCaM1AiA/Untitled?node-id=0-1&m=dev&t=saLiLtoljr4B2Qey-1
