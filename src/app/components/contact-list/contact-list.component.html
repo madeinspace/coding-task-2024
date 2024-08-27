@@ -10,6 +10,7 @@
         <button type="button" class="btn-secondary" (click)="editContactClicked(contact)">Edit Contact</button>
       </div>
     </div>
+    <app-contact-detail [contact]="activeContact$ | async"></app-contact-detail>
   </div>
 </div>
 
@@ -17,5 +18,3 @@
   <p>Loading contacts, please wait...</p>
 </ng-template>
 
-
-<app-contact-detail [contact]="activeContact$ | async"></app-contact-detail>

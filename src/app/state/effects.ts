@@ -1,11 +1,13 @@
 import { Injectable } from "@angular/core";
-import {concatMap, map, of, switchMap} from 'rxjs';
+import {concatMap, map, of, switchMap, withLatestFrom} from 'rxjs';
 import {Actions, createEffect, ofType } from '@ngrx/effects';
 
 import { State } from './';
 import * as actions from './actions';
 import { ContactService } from "../services/contact.service";
 import { Contact } from "../models/contact.model";
+import { selectContactList } from './selectors';
+import { Store } from "@ngrx/store";
 
 
 @Injectable()
@@ -14,6 +16,7 @@ export class ContactEffects {
     constructor(
         private actions$: Actions,
         private contactService: ContactService,
+        private store: Store<State>  
     ){}
 
     retrieveContactList$ = createEffect(()=> this.actions$.pipe(
@@ -27,31 +30,23 @@ export class ContactEffects {
 
     launchEditDialog$ = createEffect(() => this.actions$.pipe(
         ofType(actions.editContactClicked, actions.addContactClicked),
-        switchMap(action => {
+        withLatestFrom(this.store.select(selectContactList)), 
+        switchMap(([action, contactList]) => {
             if (action.type === actions.addContactClicked.type) {
-                return this.contactService.getContactList$().pipe(
-                    map(contactList => {
-                        let maxId = 0;
-                        
-                        for (let contact of contactList) {
-                            if (contact.id > maxId) {
-                                maxId = contact.id;
-                            }
-                        }
+                let maxId = 0;
 
-                        const newId = maxId + 1;
+                for (let contact of contactList) {
+                    if (contact.id > maxId) {
+                        maxId = contact.id;
+                    }
+                }
 
-                        const contact: Contact = { id: newId, firstName: "", lastName: "", phoneNumber: "", email: "" };
-                        return contact;
-                    }),
-                    switchMap(contact =>
-                       {
-                        console.log("new contact: ", contact)
-                        return this.contactService.editContactDialog$(contact, false).pipe(
-                            map(contact => contact ? actions.editContactConfirmed({ contact }) : actions.editContactCancelled())
-                        )
-                        }
-                    )
+                const newId = maxId + 1;
+
+                const newContact: Contact = { id: newId, firstName: "", lastName: "", phoneNumber: "", email: "" };
+                
+                return this.contactService.editContactDialog$(newContact, false).pipe(
+                    map(contact => contact ? actions.editContactConfirmed({ contact }) : actions.editContactCancelled())
                 );
             } else {
                 return this.contactService.editContactDialog$(action.contact, true).pipe(
